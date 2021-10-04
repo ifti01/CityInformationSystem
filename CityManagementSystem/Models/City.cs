@@ -16,6 +16,8 @@ namespace CityManagementSystem.Models
         public int DwellerNo { get; set; }
         public string Location { get; set; }
         public string Weather { get; set; }
+
+        public int countryId { get; set; }
         public virtual Country Country { get; set; }
     }
 }

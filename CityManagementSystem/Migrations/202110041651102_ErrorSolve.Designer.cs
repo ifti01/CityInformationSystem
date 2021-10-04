@@ -7,13 +7,13 @@ namespace CityManagementSystem.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class RemovedKey : IMigrationMetadata
+    public sealed partial class ErrorSolve : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(RemovedKey));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ErrorSolve));
         
         string IMigrationMetadata.Id
         {
-            get { return "202110031948596_RemovedKey"; }
+            get { return "202110041651102_ErrorSolve"; }
         }
         
         string IMigrationMetadata.Source

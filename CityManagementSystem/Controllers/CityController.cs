@@ -47,8 +47,9 @@ namespace CityManagementSystem.Controllers
             context.Cities.Add(obj);
             context.SaveChanges();
 
-            //return RedirectToAction("Index");
-            return PartialView();
+            return RedirectToAction("Index");
+           
+            //return PartialView();
         }
 
         public ActionResult CityTable()
