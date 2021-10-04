@@ -8,6 +8,7 @@ namespace CityManagementSystem.Models
 { 
     public class ManagementSystemContext:DbContext 
     { 
-        public DbSet<Country> Countries { get; set; }
+        public DbSet<Country> Countries { get; set; } 
+        public DbSet<City> Cities { get; set; }
     }
 }

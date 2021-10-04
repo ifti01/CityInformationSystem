@@ -1,0 +1,26 @@
+﻿@model CityManagementSystem.ViewModel.CityListViewModel
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">SL#</th>
+            <th scope="col">Name</th>
+            <th scope="col">No of Dwellers</th>
+            <th scope="col">Country</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var country in Model.Cities)
+        {
+            <tr>
+                <th scope="row">@country.Id</th>
+                <td>@country.Name</td>
+                <td>@country.DwellerNo</td>
+                <td>@country.Country.Name</td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+

@@ -7,7 +7,7 @@ using CityManagementSystem.Models;
 namespace CityManagementSystem.ViewModel
 {
     public class CountryViewModel
-    {
+    { 
         public List<Country> Countries { get; set; }
     }
 }

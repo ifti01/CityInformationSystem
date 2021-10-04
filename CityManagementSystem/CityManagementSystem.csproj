@@ -127,6 +127,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -136,10 +137,20 @@
     <Compile Include="Migrations\202110030424492_CountryModelAdded.designer.cs">
       <DependentUpon>202110030424492_CountryModelAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110031800226_CityModelAdded.cs" />
+    <Compile Include="Migrations\202110031800226_CityModelAdded.designer.cs">
+      <DependentUpon>202110031800226_CityModelAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110031948596_RemovedKey.cs" />
+    <Compile Include="Migrations\202110031948596_RemovedKey.designer.cs">
+      <DependentUpon>202110031948596_RemovedKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\City.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\ManagementSystemContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CityViewModel.cs" />
     <Compile Include="ViewModel\CountryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +192,9 @@
     <Content Include="Views\Country\Create.cshtml" />
     <Content Include="Views\Country\Index.cshtml" />
     <Content Include="Views\Country\CountryTable.cshtml" />
+    <Content Include="Views\City\Create.cshtml" />
+    <Content Include="Views\City\Index.cshtml" />
+    <Content Include="Views\City\CityTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -201,6 +215,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202110030424492_CountryModelAdded.resx">
       <DependentUpon>202110030424492_CountryModelAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110031800226_CityModelAdded.resx">
+      <DependentUpon>202110031800226_CityModelAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110031948596_RemovedKey.resx">
+      <DependentUpon>202110031948596_RemovedKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

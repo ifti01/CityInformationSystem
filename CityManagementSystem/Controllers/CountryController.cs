@@ -11,7 +11,7 @@ namespace CityManagementSystem.Controllers
     public class CountryController : Controller
     {
         ManagementSystemContext context = new ManagementSystemContext();
-        // GET: Country
+        
         public ActionResult Index()
         {
             return View();
