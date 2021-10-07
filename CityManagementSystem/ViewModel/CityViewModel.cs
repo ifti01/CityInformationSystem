@@ -22,4 +22,6 @@ namespace CityManagementSystem.ViewModel
     {
         public List<City> Cities { get; set; }
     }
+
+
 }

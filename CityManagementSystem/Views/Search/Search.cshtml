@@ -1,0 +1,131 @@
+﻿@model CityManagementSystem.ViewModel.CityDetailsViewModel
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var countryId = Model.CountryId.HasValue ? Model.CountryId.Value : 0;
+}
+
+<div class="row">
+    <div class="col col-lg-12">
+        <h2>View Cities</h2>
+        <hr />
+    </div>
+</div>
+
+
+<form id="CreateCityDetail">
+    <div class="input-group">
+        <input type="text" id="searchTxt" name="search" class="form-control" placeholder="Enter your Search" value="@Model.CityName" />
+    
+    @if (Model.Countries != null && Model.Countries.Count > 0)
+    {
+        <select class="form-control" name="CountryId" id="selectCountry">
+            <option value="0" disabled selected>
+                Select Country
+            </option>
+            @foreach (var country in Model.Countries)
+            {
+                var selected = country.Id == countryId ? "selected" : string.Empty;
+                <option value="@country.Id"  @selected>@country.Name</option>
+            }
+        </select>
+    }
+
+    <div class="input-group-append link-danger" id="button-addon4" >
+        <button type="button" id="searchBtn" class="btn btn-danger">Search</button>
+    </div>
+    </div>
+</form>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table-bordered">
+                <thead>
+                    <tr>
+                        <th>SL#</th>
+                        <th>City Name</th>
+                        <th>About</th>
+                        <th>No of Dweller</th>
+                        <th>Location</th>
+                        <th>Weather</th>
+                        <th>Country</th>
+                        <th>About Country</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @if (Model.Cities != null && Model.Cities.Count > 0)
+                    {
+                        foreach (var item in Model.Cities)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Name</td>
+                                <td>@item.About</td>
+                                <td>@item.DwellerNo</td>
+                                <td>@item.Location</td>
+                                <td>@item.Weather</td>
+                                <td>@item.Country.Name</td>
+                                <td>@item.Country.About</td>
+                            </tr>
+
+                        }
+                    }
+
+                    else
+                    {
+                        <tr>
+                            <td colspan="12" class="text-center alert alert-danger">
+                                No City data found!!!.
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $("#selectCountry").change(function() {
+        $.ajax({
+                url: '@Url.Action("Search", "Search")',
+                data: {
+                    search: $("#searchTxt").val(),
+                    countryId: $("#selectCountry").val()
+                }
+            })
+            .done(function(response) {
+                $("#ListingTable").html(response);
+                //console.log(response);
+                //window.location.href = window.location.href;
+            })
+            .fail(function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    });
+
+    $("#searchBtn").click(function () {
+        $.ajax({
+                url: '@Url.Action("Search", "Search")',
+                data: {
+                    cityName: $("#searchTxt").val()
+                }
+            })
+            .done(function (response) {
+                $("#ListingTable").html(response);
+                //console.log(response);
+                //window.location.href = window.location.href;
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    });
+
+</script>
