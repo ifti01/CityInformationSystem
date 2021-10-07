@@ -16,8 +16,13 @@ namespace CityManagementSystem.Controllers
     {
         ManagementSystemContext context = new ManagementSystemContext();
         // GET: Search
-        public ActionResult Search(string cityName, int? countryId)
+        public ActionResult Search(string cityName, int? countryId, int? pageNo, int pageSize = 3)
         {
+            pageNo = pageNo ?? 1;
+            int skipCount = (int)(pageSize * (pageNo - 1));
+
+
+
             CityDetailsViewModel viewModel = new CityDetailsViewModel();
 
             viewModel.CityName = cityName;
@@ -36,7 +41,12 @@ namespace CityManagementSystem.Controllers
                 citydetail = citydetail.Where(c => c.countryId == countryId.Value);
             }
 
-            viewModel.Cities = citydetail.ToList();
+            var totalcity = citydetail.Count();
+            viewModel.Pager = new Pager(totalcity, pageNo, pageSize);
+
+
+
+            viewModel.Cities = citydetail.OrderByDescending(c => c.Name).Skip(skipCount).Take(pageSize).ToList();
 
             return View(viewModel);
         } 

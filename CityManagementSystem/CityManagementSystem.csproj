@@ -140,6 +140,7 @@
     <Compile Include="ViewModel\CityDetailsViewModel.cs" />
     <Compile Include="ViewModel\CityViewModel.cs" />
     <Compile Include="ViewModel\CountryViewModel.cs" />
+    <Compile Include="ViewModel\PagingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

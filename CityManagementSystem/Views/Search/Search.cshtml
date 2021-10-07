@@ -20,24 +20,24 @@
 <form id="CreateCityDetail">
     <div class="input-group">
         <input type="text" id="searchTxt" name="search" class="form-control" placeholder="Enter your Search" value="@Model.CityName" />
-    
-    @if (Model.Countries != null && Model.Countries.Count > 0)
-    {
-        <select class="form-control" name="CountryId" id="selectCountry">
-            <option value="0" disabled selected>
-                Select Country
-            </option>
-            @foreach (var country in Model.Countries)
-            {
-                var selected = country.Id == countryId ? "selected" : string.Empty;
-                <option value="@country.Id"  @selected>@country.Name</option>
-            }
-        </select>
-    }
 
-    <div class="input-group-append link-danger" id="button-addon4" >
-        <button type="button" id="searchBtn" class="btn btn-danger">Search</button>
-    </div>
+        @if (Model.Countries != null && Model.Countries.Count > 0)
+        {
+            <select class="form-control" name="CountryId" id="selectCountry">
+                <option value="0" disabled selected>
+                    Select Country
+                </option>
+                @foreach (var country in Model.Countries)
+                {
+                    var selected = country.Id == countryId ? "selected" : string.Empty;
+                    <option value="@country.Id" @selected>@country.Name</option>
+                }
+            </select>
+        }
+
+        <div class="input-group-append link-danger" id="button-addon4">
+            <button type="button" id="searchBtn" class="btn btn-danger">Search</button>
+        </div>
     </div>
 </form>
 
@@ -89,6 +89,41 @@
 
                 </tbody>
             </table>
+            @if (Model.Pager != null && Model.Pager.TotalPages > 1)
+            {
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        @if (Model.Pager.CurrentPage == 1)
+                        {
+                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="pageDataLink page-link text-primary" data-href="@Url.Action("Search", "Search", new { pageNo = Model.Pager.CurrentPage - 1, categoryId = Model.CountryId, search = Model.CityName })" style="cursor:pointer">Previous</a>
+                            </li>
+                        }
+                        @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage + 1; page++)
+                        {
+                            var active = page == Model.Pager.CurrentPage ? "active" : string.Empty;
+                            <li class="page-item @active">
+                                <a class="pageDataLink page-link" data-href="@Url.Action("Search", "Search", new { pageNo = page, categoryId = Model.CountryId, search = Model.CityName })" style="cursor:pointer">@page</a>
+                            </li>
+                        }
+                        @if (Model.Pager.CurrentPage == Model.Pager.EndPage)
+                        {
+                            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="pageDataLink page-link text-primary" data-href="@Url.Action("Search", "Search", new { pageNo = Model.Pager.CurrentPage + 1, categoryId = Model.CountryId, search = Model.CityName })" style="cursor:pointer">Next</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+
         </div>
     </div>
 </div>
@@ -125,6 +160,19 @@
             })
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("FAIL");
+            });
+    });
+
+    $(".pageDataLink").click(function () {
+        var url = $(this).attr("data-href");
+        $.ajax({
+                url: url
+            })
+            .done(function(response) {
+                $("#ListingTable").html(response);
+            })
+            .fail(function() {
+                alert("Fail");
             });
     });
 

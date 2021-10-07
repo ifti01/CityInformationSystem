@@ -13,7 +13,6 @@ namespace CityManagementSystem.ViewModel
         public string CountryName { get; set; }
         public List<Country> Countries { get; set; }
         public List<City> Cities { get; set; }
-
-
+        public Pager Pager { get; set; }
     }
 }
