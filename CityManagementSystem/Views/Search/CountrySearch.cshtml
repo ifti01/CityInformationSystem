@@ -1,0 +1,131 @@
+﻿@model CityManagementSystem.ViewModel.CountryDetailsViewModel
+
+@{
+    ViewBag.Title = "CountrySearch";
+}
+
+<h2>Search Criteria</h2>
+
+<form id="CreateCityDetail">
+    <div class="input-group">
+        <input type="text" id="searchTxt" name="search" class="form-control" placeholder="Enter your Search" value="@Model.CountryName" />
+        
+        <div class="input-group-append link-danger" id="button-addon4">
+
+            <button type="button" id="searchBtn" class="btn btn-danger">Search</button>
+
+        </div>
+    </div>
+</form>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table-bordered">
+                <thead>
+                <tr>
+                    <th>SL#</th>
+                    <th>Name</th>
+                    <th>About</th>
+                    <th>No of Cities</th>
+                    <th>No of Dweller</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                @if (Model.Countries != null && Model.Countries.Count > 0)
+                {
+                    foreach (var item in Model.Countries)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>
+                            <td>@item.About</td>
+                            <td>@item.Cities.Count</td>
+                            <td>@item.Cities.Sum(c=>c.DwellerNo)</td>
+                        </tr>
+
+                    }
+                }
+
+                else
+                {
+                    <tr>
+                        <td colspan="12" class="text-center alert alert-danger">
+                            No City data found!!!.
+                        </td>
+                    </tr>
+                }
+
+                </tbody>
+            </table>
+            @if (Model.Pager != null && Model.Pager.TotalPages > 1)
+            {
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        @if (Model.Pager.CurrentPage == 1)
+                        {
+                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="pageDataLink page-link text-primary" data-href="@Url.Action("CountrySearch", "Search", new { pageNo = Model.Pager.CurrentPage - 1, search = Model.CountryName })" style="cursor:pointer">Previous</a>
+                            </li>
+                        }
+                        @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage + 1; page++)
+                        {
+                            var active = page == Model.Pager.CurrentPage ? "active" : string.Empty;
+                            <li class="page-item @active">
+                                <a class="pageDataLink page-link" data-href="@Url.Action("CountrySearch", "Search", new { pageNo = page, search = Model.CountryName })" style="cursor:pointer">@page</a>
+                            </li>
+                        }
+                        @if (Model.Pager.CurrentPage == Model.Pager.EndPage)
+                        {
+                            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="pageDataLink page-link text-primary" data-href="@Url.Action("CountrySearch", "Search", new { pageNo = Model.Pager.CurrentPage + 1,search = Model.CountryName })" style="cursor:pointer">Next</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#searchBtn").click(function () {
+        $.ajax({
+                url: '@Url.Action("CountrySearch", "Search")',
+                data: {
+                    CountryName: $("#searchTxt").val()
+                }
+            })
+            .done(function (response) {
+                $("#ListingTable").html(response);
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+    });
+
+
+    $(".pageDataLink").click(function () {
+        var url = $(this).attr("data-href");
+        $.ajax({
+                url: url
+            })
+            .done(function (response) {
+                $("#ListingTable").html(response);
+            })
+            .fail(function () {
+                alert("Fail");
+            })
+    });
+</script>
